@@ -218,3 +218,35 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---- FlowTrace specific ----
+
+# Data files (too large for git, re-downloadable)
+data/raw/
+data/processed/
+data/*.parquet
+data/*.csv
+
+# But keep the .gitkeep placeholders so folders show up
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# ML experiment tracking
+mlruns/
+mlartifacts/
+*.db
+
+# Secrets
+.env
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Generated reports (regenerable)
+reports/*.html
+!reports/.gitkeep
+
+# IDE
+.vscode/
+.idea/
