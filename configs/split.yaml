@@ -1,0 +1,31 @@
+# Temporal train/val/test split for AMLworld HI-Small.
+#
+# Dataset spans 2022-09-01 to 2022-09-18, but Sept 1-2 are simulator warmup
+# (volume artifacts) and Sept 11-18 are simulator shutdown (volume drops to
+# <400 txns/day with laundering rate inflating to 57-73%).
+#
+# Clean usable window: Sept 3 to Sept 10.
+# Split: 5 days train, 1 day val, 2 days test.
+
+dataset: HI-Small
+timezone: UTC   # Timestamps are naive; we treat them as UTC
+
+# Days to exclude entirely
+exclude_before: "2022-09-03 00:00:00"   # Sept 1-2 = simulator warmup
+exclude_after:  "2022-09-11 00:00:00"   # Sept 11+ = simulator shutdown
+
+# Cutoffs inside the usable window
+train_start: "2022-09-03 00:00:00"
+train_end:   "2022-09-08 00:00:00"      # exclusive: train = ts < train_end
+
+val_start:   "2022-09-08 00:00:00"
+val_end:     "2022-09-09 00:00:00"      # exclusive
+
+test_start:  "2022-09-09 00:00:00"
+test_end:    "2022-09-11 00:00:00"      # exclusive
+
+# Expected approximate row counts (from EDA, for sanity-check assertions)
+expected_rows:
+  train: 1860000   # ~1.86M across 5 days
+  val:    483000   # ~483k on Sept 8
+  test:   863000   # ~863k across Sept 9-10
